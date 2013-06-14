@@ -1,0 +1,47 @@
+package ServerConnector;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.widget.Toast;
+
+public class createPostThread extends Thread {
+	private String message;
+	private Context context;
+	private final String auth_token = "SZ7n0Nkuc7On-cROt6zWxg";
+
+	public createPostThread(Context context, String message) {
+		// TODO Auto-generated constructor stub
+		this.message = message;
+		this.context = context;
+	}
+
+	public void run() {
+
+		String requestURL;
+		JSONObject obj = new JSONObject();
+		JSONObject note = new JSONObject();
+		String returnString = new String();
+
+		try {
+			note.put("text", message);
+			obj.put("note", note);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		requestURL = "http://192.168.0.192:3000/api/v1/notes";
+		System.out.println(obj.toString() + "--- sent json");
+		returnString = sendReceiveJSON.createEvent(requestURL, obj, auth_token);
+		System.out.println(": return string" + returnString + "\n");
+		successToast(returnString);
+	}
+	
+	private void successToast(String returnString){
+		if (returnString != null){
+			Toast.makeText(this.context, "Note Post Successfull!", Toast.LENGTH_LONG).show();
+		}
+	}
+}

@@ -1,0 +1,80 @@
+package com.canal5.knowted;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ServerConnector.sendReceiveJSON;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+public class MainActivity extends Activity {
+
+	static final String[] FRUITS = new String[] { "Apple", "Avocado", "Banana",
+		"Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
+		"Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple" };
+	
+	static final String[] FRUITSDates = new String[] { "june 13", "june 12", "june 11",
+		"june 10", "june 9", "june 8", "june 7", "june 6",
+		"june 5", "june 4", "june 3", "june 2", "june 1" };
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        Button bPost = (Button) findViewById(R.id.bPost);
+        bPost.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EditText etNewNote = (EditText) findViewById(R.id.etNewNote);
+				
+				String NoteText = etNewNote.getText().toString();
+				
+				String requestURL;
+				JSONObject obj = new JSONObject();
+				String returnString = new String();
+				
+				String auth_token = "SZ7n0Nkuc7On-cROt6zWxg";
+
+				try {
+					obj.put("text", NoteText);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				sendReceiveJSON srj = new sendReceiveJSON();
+				srj.start();
+				
+				requestURL = "http://192.168.0.192/api/v1/notes";
+				System.out.println(obj.toString());
+				returnString = sendReceiveJSON.createEvent(requestURL, obj, auth_token);
+				System.out.println(": return string" + returnString + "\n");
+			}
+				
+				
+				
+				
+			});
+
+        ListView lvNotes = (ListView) findViewById(R.id.lvNotes);
+        lvNotes.setAdapter(new NoteArrayAdapter(this, FRUITS, FRUITSDates));
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}

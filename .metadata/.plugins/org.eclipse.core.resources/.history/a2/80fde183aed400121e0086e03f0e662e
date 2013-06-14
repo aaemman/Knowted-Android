@@ -1,0 +1,5 @@
+package com.canal5.knowted;
+
+public class getAllNotesThread extends Thread {
+
+}

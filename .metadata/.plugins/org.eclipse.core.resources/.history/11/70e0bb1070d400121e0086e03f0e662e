@@ -1,0 +1,8 @@
+package ServerConnector;
+
+public class createPostThread extends Thread {
+
+	public void run(){
+		
+	}
+}

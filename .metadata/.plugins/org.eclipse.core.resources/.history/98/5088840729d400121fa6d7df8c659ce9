@@ -1,0 +1,15 @@
+package com.canal5.knowted;
+
+import android.content.Context;
+import android.widget.ArrayAdapter;
+
+public class NoteArrayAdapter extends ArrayAdapter<T> {
+	private final Context context;
+	private final String[] values;
+
+	public NoteArrayAdapter(Context context, int textViewResourceId) {
+		super(context, textViewResourceId);
+		// TODO Auto-generated constructor stub
+	}
+
+}

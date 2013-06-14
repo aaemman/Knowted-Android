@@ -1,0 +1,58 @@
+package com.canal5.knowted;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import android.content.Context;
+
+public class getAllNotesThread extends Thread{
+
+	private final Context context;
+	private final String auth_token;
+	private final String requestURL;
+	private String returnString;
+
+	public getAllNotesThread(Context context, String auth_token,
+			String requestURL) {
+		// TODO Auto-generated constructor stub
+		this.context = context;
+		this.auth_token = auth_token;
+		this.requestURL = requestURL;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		try {
+			System.out.println("Getting all notes from: "+ requestURL);
+			
+//			returnString = sendReceiveJSON.getAllEvents(requestURL, auth_token );
+			
+
+			HttpURLConnection conn = null;
+			
+			URL url = new URL(requestURL);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setRequestProperty("Authorization", auth_token);
+			returnString = streamAllEvents(conn);
+			
+			System.out.println("Message from " + requestURL + ": "
+					+ returnString + "\n");	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+	}
+	
+	
+
+}

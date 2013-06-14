@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Knowted</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="Post">Post</string>
+    <string name="auth_token"> "SZ7n0Nkuc7On-cROt6zWxg"</string>
+
+</resources>

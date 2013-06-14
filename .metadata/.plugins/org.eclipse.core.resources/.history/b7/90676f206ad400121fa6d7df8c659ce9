@@ -1,0 +1,14 @@
+package com.canal5.knowted;
+
+import android.view.View;
+import android.view.View.OnClickListener;
+
+public class PostOnClickListener implements OnClickListener {
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

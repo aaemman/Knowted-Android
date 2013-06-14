@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="com.canal5.knowted.R.layout"/>
+<fullyQualifiedTypeName name="com.canal5.knowted.R.id"/>
+<fullyQualifiedTypeName name="java.net.ProtocolException"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.EditText"/>
+<fullyQualifiedTypeName name="ServerConnector.sendReceiveJSON"/>
+</qualifiedTypeNameHistroy>

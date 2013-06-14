@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llListItem"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/ivListItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/card_background_9patch" />
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dip"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvcreatedAt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/llListItem"
+            android:layout_marginRight="20dip"
+            android:gravity="right"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>
