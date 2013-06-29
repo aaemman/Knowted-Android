@@ -1,0 +1,80 @@
+package com.canal5.knowted;
+
+import ServerConnector.createPostThread;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+public class MainActivity extends Activity {
+
+	static String[] Notes = new String[] {};
+
+	static String[] NoteDates = new String[] {};
+
+	NoteArrayAdapter naa;
+	ListView lvNotes;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		naa = new NoteArrayAdapter(this, Notes, NoteDates);
+
+		Button bPost = (Button) findViewById(R.id.bPost);
+		lvNotes = (ListView) findViewById(R.id.lvNotes);
+		bPost.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				EditText etNewNote = (EditText) findViewById(R.id.etNewNote);
+
+				String NoteText = etNewNote.getText().toString();
+
+				 createPostThread cpt = new createPostThread(
+				 getApplicationContext(), NoteText,
+				 getString(R.string.auth_token),
+				 getString(R.string.notesURL));
+				 cpt.execute();
+
+//				System.out.println("----------------------------");
+//
+//				naa.setNotifyOnChange(true);
+//				naa.notifyDataSetChanged();
+//				lvNotes.setAdapter(new NoteArrayAdapter(getApplicationContext(), Notes, NoteDates));
+				
+//			
+//					System.out.println("----------------------------");
+//					System.out.println(":"+Notes[0]);
+//					System.out.println(NoteDates[0]);
+				etNewNote.setText("");
+
+			}
+
+		});
+		getAllNotesThread gant = new getAllNotesThread(getApplicationContext(),
+				getString(R.string.auth_token), getString(R.string.notesURL));
+		gant.run();
+		
+
+		//			gant.join();
+		lvNotes.setAdapter(new NoteArrayAdapter(getApplicationContext(), Notes, NoteDates));
+
+		
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+}

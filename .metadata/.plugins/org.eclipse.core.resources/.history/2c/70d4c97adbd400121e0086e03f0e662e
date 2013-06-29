@@ -1,0 +1,83 @@
+package com.canal5.knowted;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ServerConnector.sendReceiveJSON;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+public class getAllNotesThread extends AsyncTask<String, Integer, String> {
+
+	private final Context context;
+	private final String auth_token;
+	private final String requestURL;
+	private String returnString;
+
+	public getAllNotesThread(Context context, String auth_token,
+			String requestURL) {
+		// TODO Auto-generated constructor stub
+		this.context = context;
+		this.auth_token = auth_token;
+		this.requestURL = requestURL;
+	}
+
+	
+	@Override
+	protected String doInBackground(String... params) {
+		// TODO Auto-generated method stub
+
+		try {
+			returnString = sendReceiveJSON.getAllEvents(requestURL, auth_token);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Log.i("IndexNotes", "Message from " + requestURL + ": " + returnString);
+		
+		return returnString; 
+	}
+
+
+	@Override
+	protected void onPostExecute(String result) {
+		// TODO Auto-generated method stub
+		super.onPostExecute(result);
+		
+		try {			
+			JSONObject data = ((JSONObject)new JSONObject(result)).getJSONObject("data");
+			
+			JSONArray notes = (JSONArray) data.get("notes");
+			System.out.println(notes.toString());
+			ArrayList<String> stringNotes = new ArrayList<String>();
+			ArrayList<String> stringNotesDates = new ArrayList<String>();
+			
+			for (int i =0; i < notes.length(); i++){
+				JSONObject note = new JSONObject(notes.get(i).toString());
+				stringNotes.add(note.get("text").toString());
+				stringNotesDates.add(note.get("created_at").toString());
+				
+			}
+			
+			stringNotes.toArray(MainActivity.Notes);
+			MainActivity.NoteDates = stringNotesDates.toArray();
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	
+}

@@ -12,18 +12,24 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
-	static final String[] Notes = new String[] {};
+	static String[] Notes = new String[] {};
 
-	static final String[] NoteDates = new String[] {};
+	static String[] NoteDates = new String[] {};
+
+	NoteArrayAdapter naa;
+	ListView lvNotes;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Button bPost = (Button) findViewById(R.id.bPost);
-		bPost.setOnClickListener(new OnClickListener() {
+		naa = new NoteArrayAdapter(this, Notes, NoteDates);
 
+		Button bPost = (Button) findViewById(R.id.bPost);
+		lvNotes = (ListView) findViewById(R.id.lvNotes);
+		bPost.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -31,12 +37,22 @@ public class MainActivity extends Activity {
 
 				String NoteText = etNewNote.getText().toString();
 
-				createPostThread cpt = new createPostThread(
-						getApplicationContext(), NoteText,
-						getString(R.string.auth_token),
-						getString(R.string.notesURL));
-				cpt.execute();
+				 createPostThread cpt = new createPostThread(
+				 getApplicationContext(), NoteText,
+				 getString(R.string.auth_token),
+				 getString(R.string.notesURL));
+				 cpt.execute();
 
+//				System.out.println("----------------------------");
+//
+//				naa.setNotifyOnChange(true);
+//				naa.notifyDataSetChanged();
+//				lvNotes.setAdapter(new NoteArrayAdapter(getApplicationContext(), Notes, NoteDates));
+				
+//			
+//					System.out.println("----------------------------");
+//					System.out.println(":"+Notes[0]);
+//					System.out.println(NoteDates[0]);
 				etNewNote.setText("");
 
 			}
@@ -44,10 +60,12 @@ public class MainActivity extends Activity {
 		});
 		getAllNotesThread gant = new getAllNotesThread(getApplicationContext(),
 				getString(R.string.auth_token), getString(R.string.notesURL));
-		gant.start();
+		gant.execute();
+		
+		lvNotes.setAdapter(new NoteArrayAdapter(getApplicationContext(), Notes, NoteDates));
 
-		ListView lvNotes = (ListView) findViewById(R.id.lvNotes);
-		lvNotes.setAdapter(new NoteArrayAdapter(this, Notes, NoteDates));
+		
+
 	}
 
 	@Override

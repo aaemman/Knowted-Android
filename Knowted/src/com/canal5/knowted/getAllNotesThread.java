@@ -1,11 +1,18 @@
 package com.canal5.knowted;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ServerConnector.sendReceiveJSON;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
-public class getAllNotesThread extends Thread {
+public class getAllNotesThread extends AsyncTask<String, Integer, String> {
 
 	private final Context context;
 	private final String auth_token;
@@ -20,14 +27,11 @@ public class getAllNotesThread extends Thread {
 		this.requestURL = requestURL;
 	}
 
+
+
 	@Override
-	public void run() {
+	protected String doInBackground(String... params) {
 		// TODO Auto-generated method stub
-
-		
-
-		System.out.println("Getting all notes from: " + requestURL);
-
 		try {
 			returnString = sendReceiveJSON.getAllEvents(requestURL, auth_token);
 		} catch (IOException e) {
@@ -35,10 +39,38 @@ public class getAllNotesThread extends Thread {
 			e.printStackTrace();
 		}
 
-		System.out.println("Message from " + requestURL + ": " + returnString
-				+ "\n");
-
+		Log.i("IndexNotes", "Message from " + requestURL + ": " + returnString);
+		
+//		try {			
+//			JSONObject data = ((JSONObject)new JSONObject(returnString)).getJSONObject("data");
+//			
+//			JSONArray notes = (JSONArray) data.get("notes");
+//			ArrayList<String> stringNotes = new ArrayList<String>();
+//			ArrayList<String> stringNotesDates = new ArrayList<String>();
+//			
+//			for (int i =0; i < notes.length(); i++){
+//				JSONObject note = new JSONObject(notes.get(i).toString());
+//				stringNotes.add(note.get("text").toString());
+//				stringNotesDates.add(note.get("created_at").toString());
+//				
+//			}
+//			System.out.println("*****************************");
+//			MainActivity.Notes = stringNotes.toArray(MainActivity.Notes);
+//			MainActivity.NoteDates = stringNotesDates.toArray(MainActivity.NoteDates);
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			Log.e("IndexNotes", e.getMessage().toString());
+//		}
+//		
+//		catch (NullPointerException e) {
+//			// TODO Auto-generated catch block
+//			Log.e("IndexNotes", e.getMessage().toString()); 
+//			System.out.println("Cannot connect to the server");
+//		}
+		
+		
+		return returnString;
 	}
 
-	
-}
+	}	
+
